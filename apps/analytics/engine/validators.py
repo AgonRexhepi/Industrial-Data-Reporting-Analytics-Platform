@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from rest_framework.exceptions import ValidationError
 
-ALLOWED_AGGREGATIONS = {"count", "sum", "avg", "min", "max", "median", "std", "distinct_count", "percentage"}
+ALLOWED_AGGREGATIONS = {"count", "sum", "avg", "min", "max", "median", "std", "distinct_count"}
 
 ALLOWED_FILTER_OPERATORS = {"=", "!=", ">", ">=", "<", "<=", "in", "not_in", "contains", "starts_with", "ends_with", "is_null", "is_not_null"}
 
