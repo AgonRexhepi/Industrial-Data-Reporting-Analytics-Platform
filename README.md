@@ -1,5 +1,37 @@
 # Industrial Data Analytics & Reporting SaaS
 
+## Current foundation bootstrap
+
+The repository now includes the initial production-oriented Django foundation for Phase 1:
+
+- Django + Django REST Framework
+- PostgreSQL-ready configuration
+- Redis + Celery wiring
+- Docker + Docker Compose services
+- Nginx reverse proxy
+- Environment-based settings for development and production
+- Basic structured console logging
+- Health check endpoints at `/health/` and `/api/health/`
+
+### Quick start
+
+```bash
+cp .env.example .env
+docker compose up -d --build
+curl http://127.0.0.1/health/
+```
+
+### Initial project structure
+
+```text
+config/
+apps/
+common/
+tests/
+requirements/
+docker/
+```
+
 ## 1. Project Overview
 
 Build a production-ready, multi-tenant SaaS web application for companies and industries in Kosovo and the wider Balkan market.
