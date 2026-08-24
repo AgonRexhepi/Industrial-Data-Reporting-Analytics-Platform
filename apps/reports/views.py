@@ -51,7 +51,7 @@ def report_generate_view(request, org_pk, pk):
     report.status = Report.Status.GENERATED
     report.generated_at = timezone.now()
     report.generated_file_path = f"reports/{report.id}.{report.report_format}"
-    report.save(update_fields=["status", "generated_at", "generated_file_path", "updated_at"])
+    report.save(update_fields=["status", "generated_at", "generated_file_path"])
 
     return Response(ReportSerializer(report).data)
 
