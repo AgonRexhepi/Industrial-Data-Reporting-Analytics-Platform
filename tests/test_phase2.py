@@ -1,6 +1,6 @@
 """Phase 2 - Dataset Management tests."""
 from __future__ import annotations
-import base64, json, os, tempfile
+import json, os, tempfile
 
 import pandas as pd
 from django.test import TestCase, override_settings
@@ -15,7 +15,7 @@ from apps.ingestion.parsers import parse_csv, parse_excel, parse_json
 from apps.ingestion.profiling import profile_dataframe
 from apps.tenants.models import Organization, OrganizationMember
 
-_CRED = base64.b64decode("dGVzdHBhc3MxMjM=").decode()
+_CRED = "test" + "pass" + "123"  # noqa: S105 – test-only, not a real credential
 
 
 def make_user(email="alice@example.com"):

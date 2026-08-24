@@ -66,8 +66,9 @@ def process_dataset_file(self, dataset_id: str, file_id: str) -> dict:
 
     except Exception as exc:
         logger.exception("Failed to process dataset %s: %s", dataset_id, exc)
-        try:
-            Dataset.objects.filter(pk=dataset_id).update(status=Dataset.Status.FAILED)
-        except Exception:
-            pass
+        if self.request.retries >= self.max_retries:
+            try:
+                Dataset.objects.filter(pk=dataset_id).update(status=Dataset.Status.FAILED)
+            except Exception:
+                pass
         raise self.retry(exc=exc)

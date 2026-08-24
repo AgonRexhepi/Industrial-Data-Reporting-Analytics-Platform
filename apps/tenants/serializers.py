@@ -13,7 +13,12 @@ class OrganizationSerializer(serializers.ModelSerializer):
         read_only_fields = ("id", "slug", "is_active", "created_at")
 
     def create(self, validated_data):
-        validated_data["slug"] = slugify(validated_data["name"])
+        base_slug = slugify(validated_data["name"])
+        if not base_slug:
+            raise serializers.ValidationError({"name": "Organization name must contain at least one alphanumeric character."})
+        if Organization.objects.filter(slug=base_slug).exists():
+            raise serializers.ValidationError({"name": f"An organization with the slug '{base_slug}' already exists."})
+        validated_data["slug"] = base_slug
         return super().create(validated_data)
 
 
