@@ -36,7 +36,11 @@ def _load_dataset_df(dataset_id: str, user):
     ).exists():
         raise NotFound("Dataset not found.")
 
-    version: DatasetVersion | None = dataset.versions.order_by("-version_number").first()
+    version: DatasetVersion | None = (
+        dataset.versions.filter(dataset__status=Dataset.Status.READY)
+        .order_by("-version_number")
+        .first()
+    )
     if version is None or version.file is None:
         raise ValidationError("Dataset has no processed version.")
 

@@ -29,4 +29,4 @@ class OrganizationMemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrganizationMember
         fields = ("id", "organization", "user", "user_email", "user_full_name", "role", "joined_at")
-        read_only_fields = ("id", "joined_at")
+        read_only_fields = ("id", "organization", "joined_at")

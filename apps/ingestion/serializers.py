@@ -10,7 +10,6 @@ from apps.datasets.models import Dataset, DatasetFile
 ALLOWED_EXTENSIONS = {
     "csv": DatasetFile.Format.CSV,
     "xlsx": DatasetFile.Format.EXCEL,
-    "xls": DatasetFile.Format.EXCEL,
     "json": DatasetFile.Format.JSON,
     "xml": DatasetFile.Format.XML,
     "parquet": DatasetFile.Format.PARQUET,

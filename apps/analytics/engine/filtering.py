@@ -35,7 +35,7 @@ def apply_filters(df: pd.DataFrame, filters: list[dict]) -> pd.DataFrame:
         elif operator == "not_in":
             df = df[~col.isin(value)]
         elif operator == "contains":
-            df = df[col.astype(str).str.contains(str(value), na=False)]
+            df = df[col.astype(str).str.contains(str(value), na=False, regex=False)]
         elif operator == "starts_with":
             df = df[col.astype(str).str.startswith(str(value), na=False)]
         elif operator == "ends_with":
