@@ -27,7 +27,7 @@ def apply_aggregation(series: pd.Series, aggregation: str) -> float | int:
     elif agg == "distinct_count":
         return int(series.nunique())
     elif agg == "percentage":
-        total = series.count()
+        total = len(series)
         return round(float(series.count()) / total * 100, 2) if total else 0.0
 
     return None  # pragma: no cover

@@ -87,13 +87,15 @@ class DashboardWidgetListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def _get_dashboard(self) -> Dashboard:
-        org_id = str(self.kwargs["org_pk"])
-        if not OrganizationMember.objects.filter(organization_id=org_id, user=self.request.user).exists():
-            raise NotFound("Organization not found.")
-        try:
-            return Dashboard.objects.get(pk=self.kwargs["dashboard_pk"], organization_id=org_id)
-        except Dashboard.DoesNotExist:
-            raise NotFound("Dashboard not found.")
+        if not hasattr(self, "_cached_dashboard"):
+            org_id = str(self.kwargs["org_pk"])
+            if not OrganizationMember.objects.filter(organization_id=org_id, user=self.request.user).exists():
+                raise NotFound("Organization not found.")
+            try:
+                self._cached_dashboard = Dashboard.objects.get(pk=self.kwargs["dashboard_pk"], organization_id=org_id)
+            except Dashboard.DoesNotExist:
+                raise NotFound("Dashboard not found.")
+        return self._cached_dashboard
 
     def get_queryset(self):
         return DashboardWidget.objects.filter(dashboard=self._get_dashboard())
@@ -122,13 +124,15 @@ class DashboardFilterListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def _get_dashboard(self) -> Dashboard:
-        org_id = str(self.kwargs["org_pk"])
-        if not OrganizationMember.objects.filter(organization_id=org_id, user=self.request.user).exists():
-            raise NotFound("Organization not found.")
-        try:
-            return Dashboard.objects.get(pk=self.kwargs["dashboard_pk"], organization_id=org_id)
-        except Dashboard.DoesNotExist:
-            raise NotFound("Dashboard not found.")
+        if not hasattr(self, "_cached_dashboard"):
+            org_id = str(self.kwargs["org_pk"])
+            if not OrganizationMember.objects.filter(organization_id=org_id, user=self.request.user).exists():
+                raise NotFound("Organization not found.")
+            try:
+                self._cached_dashboard = Dashboard.objects.get(pk=self.kwargs["dashboard_pk"], organization_id=org_id)
+            except Dashboard.DoesNotExist:
+                raise NotFound("Dashboard not found.")
+        return self._cached_dashboard
 
     def get_queryset(self):
         return DashboardFilter.objects.filter(dashboard=self._get_dashboard())
@@ -186,6 +190,6 @@ class DashboardExecuteView(APIView):
                 results.append({"widget_id": str(widget.id), "widget_type": widget.widget_type, "data": data})
             except Exception as exc:
                 logger.exception("Widget %s execution error: %s", widget.id, exc)
-                results.append({"widget_id": str(widget.id), "error": str(exc)})
+                results.append({"widget_id": str(widget.id), "error": "Widget execution failed."})
 
         return Response({"dashboard_id": str(dashboard.id), "results": results})

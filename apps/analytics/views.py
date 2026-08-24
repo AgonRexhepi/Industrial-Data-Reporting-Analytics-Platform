@@ -58,9 +58,11 @@ class AnalyticsQueryView(APIView):
 
         try:
             result = run_query(df, data)
+        except ValidationError:
+            raise
         except Exception as exc:
             logger.exception("Analytics query error: %s", exc)
-            raise ValidationError(str(exc)) from exc
+            raise ValidationError("An error occurred while executing the query.") from exc
 
         return Response(result, status=status.HTTP_200_OK)
 
@@ -86,6 +88,6 @@ class AnalyticsStatisticsView(APIView):
             stats = compute_statistics(df, columns or None)
         except Exception as exc:
             logger.exception("Statistics error: %s", exc)
-            raise ValidationError(str(exc)) from exc
+            raise ValidationError("An error occurred while computing statistics.") from exc
 
         return Response({"statistics": stats}, status=status.HTTP_200_OK)
