@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "apps.tenants.apps.TenantsConfig",
     "apps.datasets.apps.DatasetsConfig",
     "apps.ingestion.apps.IngestionConfig",
+    "apps.analytics.apps.AnalyticsConfig",
+    "apps.dashboards.apps.DashboardsConfig",
     "apps.reports.apps.ReportsConfig",
     "apps.templates_api.apps.TemplatesApiConfig",
     "apps.ai_analytics.apps.AiAnalyticsConfig",
