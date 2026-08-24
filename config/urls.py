@@ -17,4 +17,13 @@ urlpatterns = [
         "api/v1/organizations/<uuid:org_pk>/ingestion/",
         include("apps.ingestion.urls"),
     ),
+    path(
+        "api/v1/organizations/<uuid:org_pk>/reports/",
+        include("apps.reports.urls"),
+    ),
+    path("api/v1/templates/", include("apps.templates_api.urls")),
+    path(
+        "api/v1/organizations/<uuid:org_pk>/ai/",
+        include("apps.ai_analytics.urls"),
+    ),
 ]

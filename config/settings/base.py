@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     "apps.tenants.apps.TenantsConfig",
     "apps.datasets.apps.DatasetsConfig",
     "apps.ingestion.apps.IngestionConfig",
+    "apps.reports.apps.ReportsConfig",
+    "apps.templates_api.apps.TemplatesApiConfig",
+    "apps.ai_analytics.apps.AiAnalyticsConfig",
 ]
 
 MIDDLEWARE = [
