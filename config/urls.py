@@ -17,4 +17,9 @@ urlpatterns = [
         "api/v1/organizations/<uuid:org_pk>/ingestion/",
         include("apps.ingestion.urls"),
     ),
+    path("api/v1/analytics/", include("apps.analytics.urls")),
+    path(
+        "api/v1/organizations/<uuid:org_pk>/dashboards/",
+        include("apps.dashboards.urls"),
+    ),
 ]
