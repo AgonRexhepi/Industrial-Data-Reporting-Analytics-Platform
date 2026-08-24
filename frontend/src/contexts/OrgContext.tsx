@@ -14,6 +14,7 @@ interface OrgContextValue {
   currentOrg: Organization | null;
   setCurrentOrg: (org: Organization) => void;
   isLoading: boolean;
+  error: string | null;
 }
 
 const OrgContext = createContext<OrgContextValue | null>(null);
@@ -23,25 +24,30 @@ export function OrgProvider({ children }: { children: ReactNode }) {
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [currentOrg, setCurrentOrg] = useState<Organization | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isAuthenticated) {
       setOrganizations([]);
       setCurrentOrg(null);
+      setError(null);
       return;
     }
     setIsLoading(true);
+    setError(null);
     listOrganizations()
       .then(({ data }) => {
         setOrganizations(data);
         if (data.length > 0) setCurrentOrg(data[0]);
       })
-      .catch(() => {})
+      .catch(() => {
+        setError("Failed to load organizations. Please refresh the page.");
+      })
       .finally(() => setIsLoading(false));
   }, [isAuthenticated]);
 
   return (
-    <OrgContext.Provider value={{ organizations, currentOrg, setCurrentOrg, isLoading }}>
+    <OrgContext.Provider value={{ organizations, currentOrg, setCurrentOrg, isLoading, error }}>
       {children}
     </OrgContext.Provider>
   );

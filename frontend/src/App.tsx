@@ -1,7 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { OrgProvider } from "./contexts/OrgContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import RootRedirect from "./components/RootRedirect";
 import Layout from "./components/Layout";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -20,14 +21,14 @@ export default function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route element={<ProtectedRoute />}>
               <Route element={<Layout />}>
+                <Route path="/" element={<RootRedirect />} />
                 <Route path="/orgs/:orgId/datasets" element={<DatasetsPage />} />
                 <Route path="/orgs/:orgId/dashboards" element={<DashboardsPage />} />
                 <Route path="/orgs/:orgId/dashboards/:dashboardId" element={<DashboardDetailPage />} />
                 <Route path="/orgs/:orgId/reports" element={<ReportsPage />} />
-                <Route path="/" element={<Navigate to="/login" replace />} />
               </Route>
             </Route>
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<RootRedirect />} />
           </Routes>
         </OrgProvider>
       </AuthProvider>

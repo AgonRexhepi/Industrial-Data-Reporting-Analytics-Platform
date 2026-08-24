@@ -4,7 +4,7 @@ import { useOrg } from "../contexts/OrgContext";
 
 export default function Layout() {
   const { user, logout } = useAuth();
-  const { currentOrg } = useOrg();
+  const { currentOrg, error: orgError } = useOrg();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -40,6 +40,11 @@ export default function Layout() {
         </div>
       </aside>
       <main className="main-content">
+        {orgError && (
+          <div className="alert alert-error" style={{ marginBottom: 20 }}>
+            {orgError}
+          </div>
+        )}
         <Outlet />
       </main>
     </div>
